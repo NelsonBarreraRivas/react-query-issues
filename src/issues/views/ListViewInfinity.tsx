@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import LoadingIcon from '../../components/LoadingIcon'
 import { IssueList } from '../components/IssueList'
 import { LabelPicker } from '../components/LabelPicker'
-import { useLabels, useIssues } from '../hooks'
-import { State } from '../interfaces'
-import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
+import { useIssueInfinity } from '../hooks'
+import { FiChevronsDown } from 'react-icons/fi'
 
 
-export const ListView = () => {
+export const ListViewInfinity = () => {
 
 
 
@@ -16,7 +15,7 @@ export const ListView = () => {
 
 	const [selectedLabels, setSelectedLabels] = useState<string[]>([])
 
-	const { issuesQuery, page, nextPage, prevPage } = useIssues({ type, labels: selectedLabels })
+	const { issuesQuery, page, nextPage, prevPage } = useIssueInfinity({ type, labels: selectedLabels })
 
 	const onLabelChangue = (labelName: string): void => {
 		selectedLabels.includes(labelName)
@@ -51,21 +50,13 @@ export const ListView = () => {
 						issues={issuesQuery.data || []}
 					/>
 				)}
-				<div className='d-flex mt-2 justify-content-between align-items-center'>
+				<div className='d-flex mt-2 justify-content-center align-items-center'>
 					<button
 						className='btn btn-outline-primary'
 						onClick={prevPage}
 						disabled={ issuesQuery.isFetching }
 					>
-						<FiChevronsLeft />
-					</button>
-					<span>{page}</span>
-					<button
-						className='btn btn-outline-primary'
-						onClick={nextPage}
-						disabled={ issuesQuery.isFetching }
-					>
-						<FiChevronsRight />
+						<FiChevronsDown />
 					</button>
 				</div>
 			</div>
